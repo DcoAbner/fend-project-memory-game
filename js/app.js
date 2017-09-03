@@ -92,7 +92,11 @@ function shuffle(array) {
 
 
 $(document).ready(function() {
+
+    init();
+
     $("#deck li").click(function() {
+
 
     })
 })
@@ -102,5 +106,3 @@ function init() {
     let deck = shuffle(cardDoubler(cardList));
     drawDeck(deck);
 }
-
-init();
