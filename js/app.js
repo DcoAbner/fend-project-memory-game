@@ -50,8 +50,10 @@ function cardDoubler(cards) {
 //will add logic to display if visible or matched
 function drawDeck(cards) {
     tempHTML = "";
+    let index = 0;
     for (let card of cards) {
-        tempHTML += `<li class="card">${card.text}</li>`;
+        tempHTML += `<li value="${index}" class="card">${card.text}</li>`;
+        index++;
     }
     document.getElementById("deck").innerHTML = tempHTML;
 }
