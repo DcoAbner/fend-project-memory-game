@@ -95,16 +95,10 @@ function shuffle(array) {
 
 $(document).ready(function() {
 
-    init();
-
-    $("#deck li").click(function() {
-
-
-    })
-})
-
-//initializes the app and creates the initial deck
-function init() {
     let deck = shuffle(cardDoubler(cardList));
     drawDeck(deck);
-}
+
+    $("#deck li").click(function() {
+        console.log(this.value);
+    })
+});
