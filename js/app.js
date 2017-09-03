@@ -46,6 +46,16 @@ function cardDoubler(cards) {
     return temp;
 }
 
+//function draws the deck as a for loop of LI elements
+//will add logic to display if visible or matched
+function drawDeck(cards) {
+    tempHTML = "";
+    for (let card of cards) {
+        tempHTML += `<li class="card">${card.text}</li>`;
+    }
+    document.getElementById("deck").innerHTML = tempHTML;
+}
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
