@@ -1,6 +1,39 @@
-/*
- * Create a list that holds all of your cards
- */
+
+//array of objects to contain each card type **needs to be doubled to create all 16 cards
+let cardList = [
+    {
+        text: '1',
+        matched: false
+    },
+    {
+        text: '2',
+        matched: false
+    },
+    {
+        text: '3',
+        matched: false
+    },
+    {
+        text: '4',
+        matched: false
+    },
+    {
+        text: '5',
+        matched: false
+    },
+    {
+        text: '6',
+        matched: false
+    },
+    {
+        text: '7',
+        matched: false
+    },
+    {
+        text: '8',
+        matched: false
+    }
+]
 
 
 /*
