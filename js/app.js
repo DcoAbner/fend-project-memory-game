@@ -91,6 +91,12 @@ function shuffle(array) {
  */
 
 
+$(document).ready(function() {
+    $("#deck li").click(function() {
+
+    })
+})
+
 //initializes the app and creates the initial deck
 function init() {
     let deck = shuffle(cardDoubler(cardList));
