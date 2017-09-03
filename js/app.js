@@ -35,6 +35,16 @@ let cardList = [
     }
 ]
 
+//function creates two copies of each card and returns the new array
+function cardDoubler(cards) {
+    let temp = [];
+    for (let card of cards) {
+        for (let i=0; i<2; i++){
+            temp.push(card);
+        }
+    }
+    return temp;
+}
 
 /*
  * Display the cards on the page
