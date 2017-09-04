@@ -2,6 +2,11 @@
  * Created by thenry on 9/4/17.
  */
 
+const TURN_DELAY = 2000;
+const THREE_STARS = 13;
+const TWO_STARS = 19;
+const ONE_STAR = 24;
+
 //array of objects to contain each card type **needs to be doubled to create all 16 cards
 let cardList = [
     {
@@ -44,3 +49,5 @@ let cardDeck = [];
 let delay = false;
 
 let moves = 0;
+
+let numberOfStars = 3;

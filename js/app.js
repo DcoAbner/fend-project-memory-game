@@ -90,6 +90,7 @@ $(document).ready(function() {
 // hiding cards
 function compareCards(card1, card2) {
     increaseNumberOfMoves();
+    updateNumberOfStars();
     console.log(`${cardDeck[card1.value].text}, ${cardDeck[card2.value].text}`);
     if (cardDeck[card1.value].text === cardDeck[card2.value].text) {
         $(card1).addClass("match");
@@ -101,7 +102,7 @@ function compareCards(card1, card2) {
             delay = false;
             $(card1).removeClass("show");
             $(card2).removeClass("show");
-        }, 2000);
+        }, TURN_DELAY);
         return false;
     }
 }
@@ -110,3 +111,26 @@ function increaseNumberOfMoves() {
     moves++;
     $(".moves").text(moves);
 };
+
+function updateNumberOfStars() {
+    if (moves <= THREE_STARS) {
+        numberOfStars = 3;
+    } else if (moves <= TWO_STARS) {
+        numberOfStars = 2;
+    } else if (moves <= ONE_STAR) {
+        numberOfStars = 1;
+    } else {
+        numberOfStars = 0;
+    }
+
+    drawStars(numberOfStars);
+}
+
+function drawStars(stars) {
+    x = document.getElementsByClassName("stars")[0];
+    x.innerHTML = "";
+    for (let i=0; i<stars; i++) {
+        x.innerHTML += `<li><i class="fa fa-star"></i>X</li>`;
+    }
+
+}
