@@ -40,6 +40,8 @@ let cardDeck = [];
 //delay prevents clicking of additional cards while two are currently being shown
 let delay = false;
 
+let moves = 0;
+
 
 
 
@@ -105,6 +107,8 @@ $(document).ready(function() {
 
     let pick1, pick2 = null;
 
+    $(".moves").text(moves);
+
     cardDeck = shuffle(cardDoubler(cardList));
     drawDeck(cardDeck);
 
@@ -132,6 +136,7 @@ $(document).ready(function() {
 //enter two li elements, will compare the value of each and return true or false; will delay 3 seconds before
 // hiding cards
 function compareCards(card1, card2) {
+    increaseNumberOfMoves();
     console.log(`${cardDeck[card1.value].text}, ${cardDeck[card2.value].text}`);
     if (cardDeck[card1.value].text === cardDeck[card2.value].text) {
         $(card1).addClass("match");
@@ -147,3 +152,8 @@ function compareCards(card1, card2) {
         return false;
     }
 }
+
+function increaseNumberOfMoves() {
+    moves++;
+    $(".moves").text(moves);
+};
