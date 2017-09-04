@@ -58,30 +58,11 @@ function shuffle(array) {
 
 $(document).ready(function() {
 
-    let pick1, pick2 = null;
+    resetGame();
 
-    $(".moves").text(moves);
-
-    cardDeck = shuffle(cardDoubler(cardList));
-    drawDeck(cardDeck);
-
-    $("#deck li").click(function() {
-
-        if (!delay) {
-            if ($(this).hasClass("show")) {
-                return;
-            }
-            if (!pick1) {
-                pick1 = this;
-                $(this).addClass("show");
-            } else if (this !== pick1) {
-                pick2 = this;
-                $(this).addClass("show");
-                compareCards(pick1, pick2);
-                pick1 = null;
-                pick2 = null
-            }
-        }
+    $("#reset").click(function() {
+        $("deck li").unbind();
+        resetGame();
     })
 
 });
@@ -134,3 +115,37 @@ function drawStars(stars) {
     }
 
 }
+
+function resetGame() {
+    moves = 0;
+    pick1 = null;
+    pick2 = null;
+    delay = false;
+
+    $(".moves").text(moves);
+
+    cardDeck = shuffle(cardDoubler(cardList));
+    drawDeck(cardDeck);
+
+    updateNumberOfStars();
+
+    $("#deck li").click(function() {
+
+        if (!delay) {
+            if ($(this).hasClass("show")) {
+                return;
+            }
+            if (!pick1) {
+                pick1 = this;
+                $(this).addClass("show");
+            } else if (this !== pick1) {
+                pick2 = this;
+                $(this).addClass("show");
+                compareCards(pick1, pick2);
+                pick1 = null;
+                pick2 = null
+            }
+        }
+    })
+}
+
