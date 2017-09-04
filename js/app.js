@@ -33,7 +33,9 @@ let cardList = [
         text: '8',
         matched: false
     }
-]
+];
+
+cardDeck = [];
 
 //function creates two copies of each card and returns the new array
 function cardDoubler(cards) {
@@ -95,10 +97,32 @@ function shuffle(array) {
 
 $(document).ready(function() {
 
-    let deck = shuffle(cardDoubler(cardList));
-    drawDeck(deck);
+    let pick1, pick2 = null
+
+    cardDeck = shuffle(cardDoubler(cardList));
+    drawDeck(cardDeck);
 
     $("#deck li").click(function() {
-        console.log(this.value);
+        if (!pick1) {
+            pick1 = this;
+        } else if (this === pick1) {
+            console.log("duplicate");
+            pick1 = null;
+        } else {
+            pick2 = this;
+            console.log(compareCards(pick1, pick2));
+            pick1 = null;
+            pick2 = null
+        }
     })
 });
+
+//enter two li elements, will compare the value of each and return true or south
+function compareCards(card1, card2) {
+    console.log(`${cardDeck[card1.value].text}, ${cardDeck[card2.value].text}`);
+    if (cardDeck[card1.value].text === cardDeck[card2.value].text) {
+        return true;
+    } else {
+        return false;
+    }
+}
