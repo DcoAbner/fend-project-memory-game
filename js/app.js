@@ -72,7 +72,6 @@ $(document).ready(function() {
 function compareCards(card1, card2) {
     increaseNumberOfMoves();
     updateNumberOfStars();
-    console.log(`${cardDeck[card1.value].text}, ${cardDeck[card2.value].text}`);
     if (cardDeck[card1.value].text === cardDeck[card2.value].text) {
         $(card1).addClass("match");
         $(card2).addClass("match");
