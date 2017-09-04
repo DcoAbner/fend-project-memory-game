@@ -6,6 +6,7 @@ const TURN_DELAY = 2000;
 const THREE_STARS = 13;
 const TWO_STARS = 16;
 const ONE_STAR = 19;
+const NUMBER_OF_CARDS = 16;
 
 //array of objects to contain each card type **needs to be doubled to create all 16 cards
 let cardList = [
@@ -54,3 +55,5 @@ let numberOfStars = 3;
 
 let pick1 = null;
 let pick2 = null;
+
+let correctCards = 0;

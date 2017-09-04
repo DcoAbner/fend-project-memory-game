@@ -76,6 +76,10 @@ function compareCards(card1, card2) {
     if (cardDeck[card1.value].text === cardDeck[card2.value].text) {
         $(card1).addClass("match");
         $(card2).addClass("match");
+        correctCards += 2;
+        if (correctCards == NUMBER_OF_CARDS) {
+            alert(`Congrats! It took you ${moves} moves to win.`);
+        }
         return true;
     } else {
         delay = true;
@@ -121,6 +125,7 @@ function resetGame() {
     pick1 = null;
     pick2 = null;
     delay = false;
+    correctCards = 0;
 
     $(".moves").text(moves);
 
