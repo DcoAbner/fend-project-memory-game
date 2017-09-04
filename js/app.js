@@ -35,7 +35,13 @@ let cardList = [
     }
 ];
 
-cardDeck = [];
+let cardDeck = [];
+
+//delay prevents clicking of additional cards while two are currently being shown
+let delay = false;
+
+
+
 
 //function creates two copies of each card and returns the new array
 function cardDoubler(cards) {
@@ -97,30 +103,30 @@ function shuffle(array) {
 
 $(document).ready(function() {
 
-    let pick1, pick2 = null
+    let pick1, pick2 = null;
 
     cardDeck = shuffle(cardDoubler(cardList));
     drawDeck(cardDeck);
 
     $("#deck li").click(function() {
-        if ($(this).hasClass("show")) {
-            console.log("already picked");
-            return;
-        }
-        if (!pick1) {
-            pick1 = this;
-            $(this).addClass("show");
-        } else if (this === pick1) {
-            $(this).removeClass("show");
-            pick1 = null;
-        } else {
-            pick2 = this;
-            $(this).addClass("show");
-            compareCards(pick1, pick2);
-            pick1 = null;
-            pick2 = null
+
+        if (!delay) {
+            if ($(this).hasClass("show")) {
+                return;
+            }
+            if (!pick1) {
+                pick1 = this;
+                $(this).addClass("show");
+            } else if (this !== pick1) {
+                pick2 = this;
+                $(this).addClass("show");
+                compareCards(pick1, pick2);
+                pick1 = null;
+                pick2 = null
+            }
         }
     })
+
 });
 
 //enter two li elements, will compare the value of each and return true or false; will delay 3 seconds before
@@ -132,10 +138,12 @@ function compareCards(card1, card2) {
         $(card2).addClass("match");
         return true;
     } else {
+        delay = true;
         setTimeout(function() {
+            delay = false;
             $(card1).removeClass("show");
             $(card2).removeClass("show");
-        }, 3000);
+        }, 2000);
         return false;
     }
 }
