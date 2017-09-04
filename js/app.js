@@ -103,6 +103,10 @@ $(document).ready(function() {
     drawDeck(cardDeck);
 
     $("#deck li").click(function() {
+        if ($(this).hasClass("show")) {
+            console.log("already picked");
+            return;
+        }
         if (!pick1) {
             pick1 = this;
             $(this).addClass("show");
