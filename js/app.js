@@ -115,7 +115,7 @@ function drawStars(stars) {
     x = document.getElementsByClassName("stars")[0];
     x.innerHTML = "";
     for (let i=0; i<stars; i++) {
-        x.innerHTML += `<li><i class="fa fa-star"></i>X</li>`;
+        x.innerHTML += `<li><i class="fa fa-star"></i></li>`;
     }
 
 }

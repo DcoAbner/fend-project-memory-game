@@ -11,35 +11,35 @@ const NUMBER_OF_CARDS = 16;
 //array of objects to contain each card type **needs to be doubled to create all 16 cards
 let cardList = [
     {
-        text: '1',
+        text: '<i class="fa fa-diamond"></i>',
         matched: false
     },
     {
-        text: '2',
+        text: '<i class="fa fa-paper-plane-o"></i>',
         matched: false
     },
     {
-        text: '3',
+        text: '<i class="fa fa-anchor"></i>',
         matched: false
     },
     {
-        text: '4',
+        text: '<i class="fa fa-bolt"></i>',
         matched: false
     },
     {
-        text: '5',
+        text: '<i class="fa fa-cube"></i>',
         matched: false
     },
     {
-        text: '6',
+        text: '<i class="fa fa-leaf"></i>',
         matched: false
     },
     {
-        text: '7',
+        text: '<i class="fa fa-bicycle"></i>',
         matched: false
     },
     {
-        text: '8',
+        text: '<i class="fa fa-bomb"></i>',
         matched: false
     }
 ];
