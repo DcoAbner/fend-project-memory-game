@@ -105,24 +105,33 @@ $(document).ready(function() {
     $("#deck li").click(function() {
         if (!pick1) {
             pick1 = this;
+            $(this).addClass("show");
         } else if (this === pick1) {
-            console.log("duplicate");
+            $(this).removeClass("show");
             pick1 = null;
         } else {
             pick2 = this;
-            console.log(compareCards(pick1, pick2));
+            $(this).addClass("show");
+            compareCards(pick1, pick2);
             pick1 = null;
             pick2 = null
         }
     })
 });
 
-//enter two li elements, will compare the value of each and return true or south
+//enter two li elements, will compare the value of each and return true or false; will delay 3 seconds before
+// hiding cards
 function compareCards(card1, card2) {
     console.log(`${cardDeck[card1.value].text}, ${cardDeck[card2.value].text}`);
     if (cardDeck[card1.value].text === cardDeck[card2.value].text) {
+        $(card1).addClass("match");
+        $(card2).addClass("match");
         return true;
     } else {
+        setTimeout(function() {
+            $(card1).removeClass("show");
+            $(card2).removeClass("show");
+        }, 3000);
         return false;
     }
 }
