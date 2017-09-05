@@ -77,7 +77,17 @@ function compareCards(card1, card2) {
         $(card2).addClass("match");
         correctCards += 2;
         if (correctCards == NUMBER_OF_CARDS) {
-            alert(`Congrats! It took you ${moves} moves to win.`);
+            $("#dialog").dialog({
+                resizable: false,
+                closeOnEscape: false,
+                buttons: {
+                    'Reset': function() {
+                        $(this).dialog("close");
+                        resetGame();
+                    }
+                }
+            });
+            $("#dialog").html(`Congrats! You won in ${moves} moves!`);
         }
         return true;
     } else {
