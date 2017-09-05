@@ -67,7 +67,7 @@ $(document).ready(function() {
 
 });
 
-//enter two li elements, will compare the value of each and return true or false; will delay 3 seconds before
+// enter two li elements, will compare the value of each and return true or false; will delay 3 seconds before
 // hiding cards
 function compareCards(card1, card2) {
     increaseNumberOfMoves();
@@ -84,8 +84,8 @@ function compareCards(card1, card2) {
         delay = true;
         setTimeout(function() {
             delay = false;
-            $(card1).removeClass("show");
-            $(card2).removeClass("show");
+            $(card1).removeClass("show open");
+            $(card2).removeClass("show open");
         }, TURN_DELAY);
         return false;
     }
@@ -116,7 +116,6 @@ function drawStars(stars) {
     for (let i=0; i<stars; i++) {
         x.innerHTML += `<li><i class="fa fa-star"></i></li>`;
     }
-
 }
 
 function resetGame() {
@@ -141,10 +140,10 @@ function resetGame() {
             }
             if (!pick1) {
                 pick1 = this;
-                $(this).addClass("show");
+                $(this).addClass("show open");
             } else if (this !== pick1) {
                 pick2 = this;
-                $(this).addClass("show");
+                $(this).addClass("show open");
                 compareCards(pick1, pick2);
                 pick1 = null;
                 pick2 = null
