@@ -8,6 +8,8 @@ const TWO_STARS = 16;
 const ONE_STAR = 19;
 const NUMBER_OF_CARDS = 16;
 
+let startTime = null;
+
 //array of objects to contain each card type **needs to be doubled to create all 16 cards
 let cardList = [
     {

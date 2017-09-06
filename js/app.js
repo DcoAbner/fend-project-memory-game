@@ -1,16 +1,73 @@
+//Function that runs when the page loads.  Calls resetGame() and then sets up
+// listener for reset button
+$(document).ready(function() {
+
+    resetGame();
+
+    $("#reset").click(function() {
+        $("deck li").unbind();
+        resetGame();
+    })
+
+});
+
+//initializes variables (declared in variables.js);
+function resetGame() {
+    moves = 0;  //counts number of moves
+    pick1 = null;  //placeholder for first card chosen
+    pick2 = null;  //placeholder for second card chosen
+    delay = false; //variable that will delay if two cards are shown (until they are hidden again)
+    correctCards = 0;  //number of correct matches (when reaches 16, the dialog modal shows)
+    startTime = new Date();  //timer for game length
+
+    $(".moves").text(moves);
+
+    cardDeck = shuffle(cardDoubler(cardList));
+    drawDeck(cardDeck);
+
+    updateNumberOfStars();  //stars based on number of moves
+
+//click listener for clicking on cards.
+// --Only allowed if not currently in delay
+// --does not allow click if currently shown
+// --stores as either pick1 (first) or pick2 (second);
+// if second card then runs compareCards to see if they match
+    $("#deck li").click(function() {
+
+        if (!delay) {
+            if ($(this).hasClass("show")) {
+                return;
+            }
+            if (!pick1) {
+                pick1 = this;
+                $(this).addClass("show open");
+            } else if (this !== pick1) {
+                pick2 = this;
+                $(this).addClass("show open");
+                compareCards(pick1, pick2);
+                pick1 = null;
+                pick2 = null
+            }
+        }
+    })
+}
+
+
 //function creates two copies of each card and returns the new array
 function cardDoubler(cards) {
-    let temp = [];
+    let cardArray = [];
     for (let card of cards) {
         for (let i=0; i<2; i++){
-            temp.push(card);
+            cardArray.push(card);
         }
     }
-    return temp;
+    return cardArray;
 }
 
 //function draws the deck as a for loop of LI elements
 //will add logic to display if visible or matched
+//value is used to index card versus the original array of cards (this prevents the font awesome symbol
+// from being visible when you inspect the elements in the browser)
 function drawDeck(cards) {
     tempHTML = "";
     let index = 0;
@@ -43,53 +100,39 @@ function shuffle(array) {
     return array;
 }
 
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-
-
-$(document).ready(function() {
-
-    resetGame();
-
-    $("#reset").click(function() {
-        $("deck li").unbind();
-        resetGame();
-    })
-
-});
-
 // enter two li elements, will compare the value of each and return true or false; will delay 3 seconds before
 // hiding cards
 function compareCards(card1, card2) {
-    increaseNumberOfMoves();
-    updateNumberOfStars();
+    increaseNumberOfMoves(); //counts current pick
+    updateNumberOfStars();  //check to see if star count decreases based on number of moves
     if (cardDeck[card1.value].text === cardDeck[card2.value].text) {
-        $(card1).addClass("match");
+        $(card1).addClass("match");  //add match class to each card
         $(card2).addClass("match");
-        correctCards += 2;
+        correctCards += 2;  //increase the number of correct cards
+
+        //modal for displaying finish dialog once game is won
         if (correctCards == NUMBER_OF_CARDS) {
+            let timeToFinish = Math.round((Date.now() - startTime)/1000);
             $("#dialog").dialog({
                 resizable: false,
                 closeOnEscape: false,
                 buttons: {
-                    'Reset': function() {
+                    'Play Again': function() {
                         $(this).dialog("close");
                         resetGame();
                     }
                 }
             });
-            $("#dialog").html(`Congrats! You won in ${moves} moves!`);
+
+            //draws number of stars based on number of stars displayed on the page
+            let rating = $($(".stars")[0]).children.length;
+            let numberOfStarsText = "";
+            for (let i=0; i < rating; i++) {
+                numberOfStarsText += "<span class='fa fa-star'></span>"
+            }
+            $("#dialog").html(`<p>Congrats! You won in ${moves} moves, and it took you ${timeToFinish} seconds.</p><p>Your rating: ${numberOfStarsText}</p>`);
         }
-        return true;
+        return;
     } else {
         delay = true;
         setTimeout(function() {
@@ -97,15 +140,17 @@ function compareCards(card1, card2) {
             $(card1).removeClass("show open");
             $(card2).removeClass("show open");
         }, TURN_DELAY);
-        return false;
+        return;
     }
 }
 
+//updates #of moves by 1
 function increaseNumberOfMoves() {
     moves++;
     $(".moves").text(moves);
 };
 
+//changes number of stars displayed based on moves (which can be set as constants in variables.js
 function updateNumberOfStars() {
     if (moves <= THREE_STARS) {
         numberOfStars = 3;
@@ -120,6 +165,7 @@ function updateNumberOfStars() {
     drawStars(numberOfStars);
 }
 
+//function to draw #of stars
 function drawStars(stars) {
     x = document.getElementsByClassName("stars")[0];
     x.innerHTML = "";
@@ -128,37 +174,4 @@ function drawStars(stars) {
     }
 }
 
-function resetGame() {
-    moves = 0;
-    pick1 = null;
-    pick2 = null;
-    delay = false;
-    correctCards = 0;
-
-    $(".moves").text(moves);
-
-    cardDeck = shuffle(cardDoubler(cardList));
-    drawDeck(cardDeck);
-
-    updateNumberOfStars();
-
-    $("#deck li").click(function() {
-
-        if (!delay) {
-            if ($(this).hasClass("show")) {
-                return;
-            }
-            if (!pick1) {
-                pick1 = this;
-                $(this).addClass("show open");
-            } else if (this !== pick1) {
-                pick2 = this;
-                $(this).addClass("show open");
-                compareCards(pick1, pick2);
-                pick1 = null;
-                pick2 = null
-            }
-        }
-    })
-}
 
